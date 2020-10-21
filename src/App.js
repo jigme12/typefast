@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App() {
+    const [text, setText]=useState("")
+    const [timeRemaining, setTimeRemaining]= useState(5)
+    const [isTimeRunning, setIsTimeRunning]= useState(false)
+
+    function handleChange(e){
+        const{value}=e.target
+        setText(value)
+    }
+    function calculateWordCount(text){
+        const wordsArr= text.trim().split(" ")
+        return wordsArr.filter(word => word !=="").length
+    }
+    useEffect(()=>{
+        if(isTimeRunning && timeRemaining > 0) {
+        setTimeout(()=>{setTimeRemaining(time=>time-1)}, 1000)
+
+        }},[timeRemaining, isTimeRunning])
+    
+    return (
+        <div>
+            <h1>How Fast Can You Type?</h1>
+            <textarea
+            onChange={handleChange}
+             value={text} />
+            <h4>Time Remaining: {timeRemaining}</h4>
+            <button onClick={()=>setIsTimeRunning(true)}>Start</button>
+            <h1>Word Count: ???</h1>
+            
+        </div>
+    )
 }
-
-export default App;
